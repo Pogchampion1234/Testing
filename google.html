@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <style>
@@ -18,10 +19,13 @@
       position: relative;
       width: 400px;
       margin: 40px auto;
+      display: flex;       /* Flex container to align input & button */
+      gap: 10px;           /* Space between input and button */
+      align-items: center; /* Vertically center items */
     }
 
     input.a {
-      width: 100%;
+      flex: 1;             /* Input fills remaining space */
       height: 35px;
       padding: 0 10px;
       font-size: 16px;
@@ -56,27 +60,28 @@
       background-color: #f0f0f0;
     }
 
+    .recent-box li.disabled {
+      color: #999;
+      cursor: default;
+      user-select: none;
+    }
+
+    /* Remove hover effect on disabled items */
+    .recent-box li.disabled:hover {
+      background-color: transparent;
+    }
+
     button {
       height: 35px;
       font-size: 16px;
-      margin-left: 10px;
+      padding: 0 15px;
+      cursor: pointer;
     }
 
     img {
       display: block;
       margin: 40px auto 10px auto;
     }
-
-    .recent-box li.disabled {
-  color: #999;
-  cursor: default;
-  user-select: none;
-}
-
-/* Remove hover effect on disabled items */
-.recent-box li.disabled:hover {
-  background-color: transparent; /* or same as default background */
-}
   </style>
 </head>
 <body>
@@ -85,7 +90,9 @@
   <img src="google.jpg" width="600">
 
   <div class="search-wrapper">
-    <input id="searchInput" class="a" type="text" placeholder="Search">
+    <input id="searchInput" class="a" type="text" placeholder="Search" />
+    <button id="searchBtn">Search</button>
+
     <div id="recentBox" class="recent-box">
       <ul>
         <li class="disabled">Recents Searches...</li>
@@ -97,54 +104,50 @@
     </div>
   </div>
 
-  <button id="searchBtn">Search</button>
-
   <script>
-  const searchInput = document.getElementById("searchInput");
-  const recentBox = document.getElementById("recentBox");
+    const searchInput = document.getElementById("searchInput");
+    const recentBox = document.getElementById("recentBox");
 
-  searchInput.addEventListener("focus", () => {
-    recentBox.style.display = "block";
-  });
+    searchInput.addEventListener("focus", () => {
+      recentBox.style.display = "block";
+    });
 
-  document.addEventListener("click", (e) => {
-    if (!searchInput.contains(e.target) && !recentBox.contains(e.target)) {
-      recentBox.style.display = "none";
-    }
-  });
-
-  document.querySelectorAll(".recent-box li").forEach(item => {
-    if (!item.classList.contains("disabled")) {
-      item.addEventListener("click", () => {
-        searchInput.value = item.textContent;
+    document.addEventListener("click", (e) => {
+      if (!searchInput.contains(e.target) && !recentBox.contains(e.target)) {
         recentBox.style.display = "none";
-      });
-    }
-  });
+      }
+    });
 
-  const searchBtn = document.getElementById("searchBtn");
+    document.querySelectorAll(".recent-box li").forEach(item => {
+      if (!item.classList.contains("disabled")) {
+        item.addEventListener("click", () => {
+          searchInput.value = item.textContent;
+          recentBox.style.display = "none";
+        });
+      }
+    });
 
-  searchBtn.addEventListener("click", () => {
-    const val = searchInput.value.trim();
+    const searchBtn = document.getElementById("searchBtn");
 
-    if (val === "Pumpkin Pie recipe 🐈") {
-        window.open("https://en.wikipedia.org/wiki/Pumpkin_pie", "_blank");
-         // You can add more actions here, like redirect or show special content
-    } 
-    else if (val === "That embarassing photo of pumpkin at the christmas party") {
-        window.open("https://www.youtube.com/shorts/JswGHaKExGw", "_blank");
-         // You can add more actions here, like redirect or show special content
-    }
-    else if (val === "How to win in mario kart") {
-        window.open("https://www.nintendo.com/jp/ichikara/aabpa/index_en.html", "_blank");
-    }
-    else if (val === "What you came here for...") {
-        window.location.href = "test2.html";
-    }
-    else {
-        alert(`Sorry Google is under maintanance right now. Please try again later :(`);
-    }
-  });
-</script>
+    searchBtn.addEventListener("click", () => {
+      const val = searchInput.value.trim();
+
+      if (val === "Pumpkin Pie recipe 🐈") {
+          window.open("https://en.wikipedia.org/wiki/Pumpkin_pie", "_blank");
+      } 
+      else if (val === "That embarassing photo of pumpkin at the christmas party") {
+          window.open("https://www.youtube.com/shorts/JswGHaKExGw", "_blank");
+      }
+      else if (val === "How to win in mario kart") {
+          window.open("https://www.nintendo.com/jp/ichikara/aabpa/index_en.html", "_blank");
+      }
+      else if (val === "What you came here for...") {
+          window.location.href = "test2.html";
+      }
+      else {
+          alert(`Sorry Google is under maintenance right now. Please try again later :(`);
+      }
+    });
+  </script>
 </body>
 </html>
