@@ -1,0 +1,150 @@
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .top-left {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 400px;
+      margin: 40px auto;
+    }
+
+    input.a {
+      width: 100%;
+      height: 35px;
+      padding: 0 10px;
+      font-size: 16px;
+    }
+
+    .recent-box {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-size: 14px;
+      display: none;
+      z-index: 10;
+    }
+
+    .recent-box ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .recent-box li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .recent-box li:hover {
+      background-color: #f0f0f0;
+    }
+
+    button {
+      height: 35px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+
+    img {
+      display: block;
+      margin: 40px auto 10px auto;
+    }
+
+    .recent-box li.disabled {
+  color: #999;
+  cursor: default;
+  user-select: none;
+}
+
+/* Remove hover effect on disabled items */
+.recent-box li.disabled:hover {
+  background-color: transparent; /* or same as default background */
+}
+  </style>
+</head>
+<body>
+  <div class="top-left">This looks familiar...</div>
+
+  <img src="google.jpg" width="600">
+
+  <div class="search-wrapper">
+    <input id="searchInput" class="a" type="text" placeholder="Search">
+    <div id="recentBox" class="recent-box">
+      <ul>
+        <li class="disabled">Recents Searches...</li>
+        <li>Pumpkin Pie recipe 🐈</li>
+        <li>That embarassing photo of pumpkin at the christmas party</li>
+        <li>How to win in mario kart</li>
+        <li>What you came here for...</li>
+      </ul>
+    </div>
+  </div>
+
+  <button id="searchBtn">Search</button>
+
+  <script>
+  const searchInput = document.getElementById("searchInput");
+  const recentBox = document.getElementById("recentBox");
+
+  searchInput.addEventListener("focus", () => {
+    recentBox.style.display = "block";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !recentBox.contains(e.target)) {
+      recentBox.style.display = "none";
+    }
+  });
+
+  document.querySelectorAll(".recent-box li").forEach(item => {
+    if (!item.classList.contains("disabled")) {
+      item.addEventListener("click", () => {
+        searchInput.value = item.textContent;
+        recentBox.style.display = "none";
+      });
+    }
+  });
+
+  const searchBtn = document.getElementById("searchBtn");
+
+  searchBtn.addEventListener("click", () => {
+    const val = searchInput.value.trim();
+
+    if (val === "Pumpkin Pie recipe 🐈") {
+        window.open("https://en.wikipedia.org/wiki/Pumpkin_pie", "_blank");
+         // You can add more actions here, like redirect or show special content
+    } 
+    else if (val === "That embarassing photo of pumpkin at the christmas party") {
+        window.open("https://www.youtube.com/shorts/JswGHaKExGw", "_blank");
+         // You can add more actions here, like redirect or show special content
+    }
+    else if (val === "How to win in mario kart") {
+        window.open("https://www.nintendo.com/jp/ichikara/aabpa/index_en.html", "_blank");
+    }
+    else if (val === "What you came here for...") {
+        window.location.href = "test2.html";
+    }
+    else {
+        alert(`Sorry Google is under maintanance right now. Please try again later :(`);
+    }
+  });
+</script>
+</body>
+</html>
